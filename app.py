@@ -155,6 +155,18 @@ def index():
     return render_template('index.html')
 
 
+@app.route('/robots.txt')
+def robots():
+    """Qidiruv botlari (Google, Yandex) uchun robots.txt"""
+    return send_file(os.path.join(BASE_DIR, 'robots.txt'), mimetype='text/plain')
+
+
+@app.route('/sitemap.xml')
+def sitemap():
+    """Qidiruv tizimlari indekslashi uchun sitemap.xml"""
+    return send_file(os.path.join(BASE_DIR, 'sitemap.xml'), mimetype='application/xml')
+
+
 @app.route('/api/convert-text', methods=['POST'])
 def api_convert_text():
     """Jonli matnni o'girish yoki tarjima qilish API"""
