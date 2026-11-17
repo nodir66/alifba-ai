@@ -1,0 +1,869 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Alifba AI • Конвертер PDF, Новый Алфавит и AI Переводчик • Ismoilov Nodir</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/css/style.css">
+  <link rel="icon" href="/static/img/logo_alifba.jpg">
+</head>
+<body>
+  <!-- Header / Navbar -->
+  <header class="app-header">
+    <div class="header-container">
+      <div class="brand">
+        <div class="logo-box brand-logo-large">
+          <img src="/static/img/logo_alifba.jpg" alt="Alifba AI" class="brand-logo-img">
+        </div>
+        <div class="brand-text">
+          <div class="brand-title-row">
+            <h1>Alifba <span class="gradient-text">AI</span></h1>
+            <span class="brand-badge-pill">STUDIO PRO</span>
+          </div>
+          <p data-i18n="brandSub">Конвертер PDF в Word, Новый Алфавит и AI Переводчик</p>
+        </div>
+      </div>
+
+      <!-- Header Actions: Theme Switcher & Language Selector & User Auth -->
+      <div class="header-actions">
+        <!-- Modern Theme Toggle Switch (Sky Light / Midnight Dark) -->
+        <button id="theme-toggle-btn" class="theme-toggle-btn" type="button" title="Переключить тему оформления">
+          <span class="theme-btn-icon">☀️</span>
+          <span class="theme-btn-label" data-i18n="themeLight">Светлая</span>
+        </button>
+
+        <!-- Language Selector (RU, UZ, EN - Russian default) -->
+        <div class="lang-switch">
+          <button class="lang-btn active" data-lang="ru">🇷🇺 Русский</button>
+          <button class="lang-btn" data-lang="uz">🇺🇿 O‘zbek</button>
+          <button class="lang-btn" data-lang="en">🇬🇧 English</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Tizim E'lon Banneri (Admin tomonidan yoqilsa) -->
+  <div id="announcement-banner" class="announcement-bar" style="display: none;">
+    <div class="announcement-content">
+      <span class="announcement-icon">📢</span>
+      <span id="announcement-text"></span>
+    </div>
+  </div>
+
+  <!-- Main Container -->
+  <main class="main-content">
+    
+    <!-- 4 Main Navigation Modules (Alohida Bo'limlar) -->
+    <nav class="nav-tabs">
+      <!-- 1-Bo'lim: PDF to Word -->
+      <button class="tab-btn active" data-tab="module-pdf">
+        <div class="tab-icon-wrap">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+        </div>
+        <span class="tab-title" data-i18n="tabPdf">📑 PDF ➔ Word</span>
+        <span class="tab-desc" data-i18n="tabPdfDesc">Xatosiz Word (.docx) qilish</span>
+      </button>
+
+      <!-- 2-Bo'lim: Alifbo Konverteri -->
+      <button class="tab-btn" data-tab="module-alifbo">
+        <div class="tab-icon-wrap">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="4 7 4 4 20 4 20 7"></polyline><line x1="9" y1="20" x2="15" y2="20"></line><line x1="12" y1="4" x2="12" y2="20"></line></svg>
+        </div>
+        <span class="tab-title" data-i18n="tabAlifbo">🔤 Alifbo Konverteri</span>
+        <span class="tab-desc" data-i18n="tabAlifboDesc">Kirill, Lotin, Yangi Lotin</span>
+      </button>
+
+      <!-- 3-Bo'lim: Tarjima Studiyasi -->
+      <button class="tab-btn" data-tab="module-translate">
+        <div class="tab-icon-wrap">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+        </div>
+        <span class="tab-title" data-i18n="tabTranslate">🌐 AI Tarjima</span>
+        <span class="tab-desc" data-i18n="tabTranslateDesc">Rus, O‘zbek, Ingliz tillari</span>
+      </button>
+
+      <!-- 4-Bo'lim: Dastur Haqida va Donat -->
+      <button class="tab-btn" data-tab="module-about">
+        <div class="tab-icon-wrap">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+        </div>
+        <span class="tab-title" data-i18n="tabAbout">ℹ️ Dastur Haqida</span>
+        <span class="tab-desc" data-i18n="tabAboutDesc">Muallif & Donat (Karta, QR)</span>
+      </button>
+    </nav>
+
+    <!-- ====================================================================
+         1-BO'LIM: PDF TO WORD
+         ==================================================================== -->
+    <section id="module-pdf" class="tab-content active">
+      <div class="card">
+        <div class="card-header-bar">
+          <div class="card-title-group">
+            <h2 data-i18n="pdfStudioTitle">📑 PDF Asboblari Majmuasi (PDF Studio)</h2>
+            <p data-i18n="pdfStudioDesc">Barcha zaruriy PDF amallari: Word, Excel, PowerPoint, birlashtirish, siqish, burish, suv belgisi va himoyalash.</p>
+          </div>
+          <span class="pill pill-pdf">15-in-1 PDF Suite</span>
+        </div>
+
+        <!-- 15 ta Zamonaviy PDF Asboblar Grid (iLovePDF uslubida) -->
+        <div class="pdf-tools-grid">
+          <!-- 1. PDF to Word -->
+          <div class="pdf-tool-card active" data-tool="pdf_to_word">
+            <div class="tool-badge-icon badge-blue">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+            </div>
+            <div class="tool-card-content">
+              <strong data-i18n="toolPdfWordTitle">PDF ➔ Word</strong>
+              <span data-i18n="toolPdfWordDesc">Word (.docx) ga xatosiz o‘tkazish</span>
+            </div>
+          </div>
+
+          <!-- 2. Word to PDF -->
+          <div class="pdf-tool-card" data-tool="word_to_pdf">
+            <div class="tool-badge-icon badge-blue-dark">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><path d="M12 18v-6"/><path d="m9 15 3 3 3-3"/></svg>
+            </div>
+            <div class="tool-card-content">
+              <strong data-i18n="toolWordPdfTitle">Word ➔ PDF</strong>
+              <span data-i18n="toolWordPdfDesc">DOCX hujjatlarni PDF qilish</span>
+            </div>
+          </div>
+
+          <!-- 3. Merge PDF -->
+          <div class="pdf-tool-card" data-tool="merge">
+            <div class="tool-badge-icon badge-red">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3H5a2 2 0 0 0-2 2v3"/><path d="M21 8V5a2 2 0 0 0-2-2h-3"/><path d="M3 16v3a2 2 0 0 0 2 2h3"/><path d="M16 21h3a2 2 0 0 0 2-2v-3"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+            </div>
+            <div class="tool-card-content">
+              <strong data-i18n="toolMergeTitle">Birlashtirish (Merge)</strong>
+              <span data-i18n="toolMergeDesc">Bir nechta PDF ni bitta qilish</span>
+            </div>
+          </div>
+
+          <!-- 4. Split PDF -->
+          <div class="pdf-tool-card" data-tool="split">
+            <div class="tool-badge-icon badge-orange">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><line x1="20" y1="4" x2="8.12" y2="15.88"/><line x1="14.47" y1="14.48" x2="20" y2="20"/><line x1="8.12" y1="8.12" x2="12" y2="12"/></svg>
+            </div>
+            <div class="tool-card-content">
+              <strong data-i18n="toolSplitTitle">Ajratish (Split)</strong>
+              <span data-i18n="toolSplitDesc">Sahifalarni kesib olish</span>
+            </div>
+          </div>
+
+          <!-- 5. Compress PDF -->
+          <div class="pdf-tool-card" data-tool="compress">
+            <div class="tool-badge-icon badge-green">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="4 14 10 14 10 20"/><polyline points="20 10 14 10 14 4"/><line x1="14" y1="10" x2="21" y2="3"/><line x1="3" y1="21" x2="10" y2="14"/></svg>
+            </div>
+            <div class="tool-card-content">
+              <strong data-i18n="toolCompressTitle">Siqish (Compress)</strong>
+              <span data-i18n="toolCompressDesc">Fayl hajmini kamaytirish</span>
+            </div>
+          </div>
+
+          <!-- 6. PDF to Excel -->
+          <div class="pdf-tool-card" data-tool="pdf_to_excel">
+            <div class="tool-badge-icon badge-emerald">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M3 9h18"/><path d="M3 15h18"/><path d="M9 3v18"/><path d="M15 3v18"/></svg>
+            </div>
+            <div class="tool-card-content">
+              <strong data-i18n="toolPdfExcelTitle">PDF ➔ Excel</strong>
+              <span data-i18n="toolPdfExcelDesc">Jadvallarni XLSX ga ajratish</span>
+            </div>
+          </div>
+
+          <!-- 7. Excel to PDF -->
+          <div class="pdf-tool-card" data-tool="excel_to_pdf">
+            <div class="tool-badge-icon badge-teal">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><rect x="8" y="12" width="8" height="6"/></svg>
+            </div>
+            <div class="tool-card-content">
+              <strong data-i18n="toolExcelPdfTitle">Excel ➔ PDF</strong>
+              <span data-i18n="toolExcelPdfDesc">XLSX jadvallarni PDF qilish</span>
+            </div>
+          </div>
+
+          <!-- 8. PPT to PDF -->
+          <div class="pdf-tool-card" data-tool="ppt_to_pdf">
+            <div class="tool-badge-icon badge-amber">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+            </div>
+            <div class="tool-card-content">
+              <strong data-i18n="toolPptPdfTitle">PowerPoint ➔ PDF</strong>
+              <span data-i18n="toolPptPdfDesc">PPTX taqdimotni PDF qilish</span>
+            </div>
+          </div>
+
+          <!-- 9. PDF to JPG/Images -->
+          <div class="pdf-tool-card" data-tool="pdf_to_images">
+            <div class="tool-badge-icon badge-yellow">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg>
+            </div>
+            <div class="tool-card-content">
+              <strong data-i18n="toolPdfImgTitle">PDF ➔ JPG/PNG</strong>
+              <span data-i18n="toolPdfImgDesc">Sahifalarni rasmga o‘tkazish</span>
+            </div>
+          </div>
+
+          <!-- 10. Images to PDF -->
+          <div class="pdf-tool-card" data-tool="images_to_pdf">
+            <div class="tool-badge-icon badge-violet">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><circle cx="10" cy="13" r="2"/><path d="m20 17-2.5-2.5a2 2 0 0 0-2.8 0L8 21"/></svg>
+            </div>
+            <div class="tool-card-content">
+              <strong data-i18n="toolImgPdfTitle">JPG/PNG ➔ PDF</strong>
+              <span data-i18n="toolImgPdfDesc">Rasmlardan PDF yaratish</span>
+            </div>
+          </div>
+
+          <!-- 11. Rotate PDF -->
+          <div class="pdf-tool-card" data-tool="rotate">
+            <div class="tool-badge-icon badge-cyan">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a9 9 0 1 1-9-9c2.52 0 4.93 1 6.74 2.74L21 8"/><polyline points="21 3 21 8 16 8"/></svg>
+            </div>
+            <div class="tool-card-content">
+              <strong data-i18n="toolRotateTitle">Burish (Rotate)</strong>
+              <span data-i18n="toolRotateDesc">90°, 180°, 270° ga burish</span>
+            </div>
+          </div>
+
+          <!-- 12. Watermark PDF -->
+          <div class="pdf-tool-card" data-tool="watermark">
+            <div class="tool-badge-icon badge-pink">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg>
+            </div>
+            <div class="tool-card-content">
+              <strong data-i18n="toolWatermarkTitle">Suv Belgisi</strong>
+              <span data-i18n="toolWatermarkDesc">Matnli belgi tushirish</span>
+            </div>
+          </div>
+
+          <!-- 13. Page Numbers -->
+          <div class="pdf-tool-card" data-tool="page_numbers">
+            <div class="tool-badge-icon badge-purple">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/><path d="M8 7h6"/><path d="M8 11h8"/><path d="M8 15h4"/></svg>
+            </div>
+            <div class="tool-card-content">
+              <strong data-i18n="toolPageNumTitle">Sahifa Raqamlari</strong>
+              <span data-i18n="toolPageNumDesc">1, 2, 3... tartib raqam</span>
+            </div>
+          </div>
+
+          <!-- 14. Protect PDF -->
+          <div class="pdf-tool-card" data-tool="protect">
+            <div class="tool-badge-icon badge-slate">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            </div>
+            <div class="tool-card-content">
+              <strong data-i18n="toolProtectTitle">Himoyalash (Parol)</strong>
+              <span data-i18n="toolProtectDesc">Parol bilan shifrlash</span>
+            </div>
+          </div>
+
+          <!-- 15. Unlock PDF -->
+          <div class="pdf-tool-card" data-tool="unlock">
+            <div class="tool-badge-icon badge-indigo">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 9.9-1"/></svg>
+            </div>
+            <div class="tool-card-content">
+              <strong data-i18n="toolUnlockTitle">Parolni Yechish</strong>
+              <span data-i18n="toolUnlockDesc">Himoyani olib tashlash</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- ==============================================================
+             Tanlangan Asbob Bo'yicha Interaktiv Ish Maydoni (Workspace)
+             ============================================================== -->
+        <div class="pdf-workspace-card">
+          <div class="workspace-header">
+            <div class="workspace-title-group">
+              <div class="tool-badge-icon badge-blue workspace-current-icon" id="pdf-workspace-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+              </div>
+              <div>
+                <h3 id="pdf-workspace-title">PDF ➔ Word Konverteri</h3>
+                <p id="pdf-workspace-desc">PDF faylni barcha jadvallar va shriftlar bilan xatosiz tahrirlanuvchi Word (.docx) formatiga o‘tkazing.</p>
+              </div>
+            </div>
+            <span class="pill pill-pdf workspace-format-badge" id="pdf-workspace-pill">.PDF</span>
+          </div>
+
+          <!-- Dinamik Sozlamalar Maydoni (Asbobga qarab ko'rinadi) -->
+          <div class="tool-options-container" id="pdf-tool-options">
+            <!-- 1. PDF to Word rejim tanlovi -->
+            <div class="tool-opt-panel" id="opt-panel-pdf_to_word">
+              <div class="mode-selector-grid" style="margin-bottom: 0;">
+                <div class="mode-radio-card active" data-mode="pdf_to_word">
+                  <div class="mode-radio-indicator"></div>
+                  <div class="mode-info">
+                    <strong data-i18n="pdfModeDirect">Faqat Word (.docx) ga o‘tkazish</strong>
+                    <span data-i18n="pdfModeDirectSub">Alifbo va matnni o‘zgartirmasdan tahrirlanuvchi Word qilish</span>
+                  </div>
+                </div>
+                <div class="mode-radio-card" data-mode="cyr_to_new_lat">
+                  <div class="mode-radio-indicator"></div>
+                  <div class="mode-info">
+                    <strong data-i18n="pdfModeNewLat">Wordga o‘tkazish + Yangi Lotin</strong>
+                    <span data-i18n="pdfModeNewLatSub">PDF ni Word qilib, birdaniga Ö, Ğ, Ş, Ç ga o‘giradi</span>
+                  </div>
+                </div>
+                <div class="mode-radio-card" data-mode="ru_to_uz">
+                  <div class="mode-radio-indicator"></div>
+                  <div class="mode-info">
+                    <strong data-i18n="pdfModeRuUz">Wordga o‘tkazish + O‘zbekchaga Tarjima</strong>
+                    <span data-i18n="pdfModeRuUzSub">Ruscha PDF ni Word qilib, o‘zbek tiliga tarjima qiladi</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 2. Split Options -->
+            <div class="tool-opt-panel" id="opt-panel-split" style="display: none;">
+              <div class="opt-field-group" style="flex-direction: column; align-items: flex-start; gap: 8px; width: 100%;">
+                <label data-i18n="labelSplitMode">Ajratish usuli:</label>
+                <div class="opt-radios" id="split-mode-radios">
+                  <button type="button" class="opt-radio-btn active" data-val="har_biri" data-i18n="splitAllPages">📦 Barcha sahifalarni alohida PDF qilib ZIP ga joylash</button>
+                  <button type="button" class="opt-radio-btn" data-val="custom" data-i18n="splitCustomPages">✂️ Tanlangan sahifalar (oraliqlar bo‘yicha)</button>
+                </div>
+                <div id="split-custom-input-wrap" style="display: none; width: 100%; margin-top: 4px;">
+                  <input type="text" class="opt-input" id="split-page-range" placeholder="Sahifalar oralig‘ini kiriting (masalan: 1-3, 5, 8-10)..." value="" style="width: 100%;">
+                </div>
+              </div>
+            </div>
+
+            <!-- 3. Compress Options -->
+            <div class="tool-opt-panel" id="opt-panel-compress" style="display: none;">
+              <div class="opt-field-group">
+                <label data-i18n="labelCompressLevel">Siqish darajasi:</label>
+                <div class="opt-radios" id="compress-level-radios">
+                  <button type="button" class="opt-radio-btn active" data-val="medium" data-i18n="optCompMed">Standart (Tavsiya etiladi)</button>
+                  <button type="button" class="opt-radio-btn" data-val="extreme" data-i18n="optCompExtr">Maksimal (Kichik hajm)</button>
+                  <button type="button" class="opt-radio-btn" data-val="light" data-i18n="optCompLight">Yengil (Yuqori sifat)</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- 4. Rotate Options -->
+            <div class="tool-opt-panel" id="opt-panel-rotate" style="display: none;">
+              <div class="opt-field-group">
+                <label data-i18n="labelRotateAngle">Burish burchagi:</label>
+                <div class="opt-radios" id="rotate-angle-radios">
+                  <button type="button" class="opt-radio-btn active" data-val="90">90° O‘ngga</button>
+                  <button type="button" class="opt-radio-btn" data-val="180">180° Teskari</button>
+                  <button type="button" class="opt-radio-btn" data-val="270">270° Chapga</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- 5. Watermark Options -->
+            <div class="tool-opt-panel" id="opt-panel-watermark" style="display: none;">
+              <div class="opt-field-group">
+                <label data-i18n="labelWmText">Suv belgisi matni:</label>
+                <input type="text" class="opt-input" id="watermark-text-input" placeholder="Masalan: KONFIDENSIAL, NUSXA, Ism..." value="KONFIDENSIAL">
+                <label style="min-width: 80px;" data-i18n="labelWmSize">Shrift:</label>
+                <input type="number" class="opt-input" id="watermark-size-input" style="max-width: 90px;" min="20" max="80" value="38">
+              </div>
+            </div>
+
+            <!-- 6. Page Numbers Options -->
+            <div class="tool-opt-panel" id="opt-panel-page_numbers" style="display: none;">
+              <div class="opt-field-group">
+                <label data-i18n="labelPagePos">Raqam joylashuvi:</label>
+                <div class="opt-radios" id="page-number-pos-radios">
+                  <button type="button" class="opt-radio-btn active" data-val="bottom-right" data-i18n="posBotRight">Pastki o‘ngda</button>
+                  <button type="button" class="opt-radio-btn" data-val="bottom-center" data-i18n="posBotCenter">Pastki markazda</button>
+                  <button type="button" class="opt-radio-btn" data-val="top-right" data-i18n="posTopRight">Yuqori o‘ngda</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- 7. Protect Options -->
+            <div class="tool-opt-panel" id="opt-panel-protect" style="display: none;">
+              <div class="opt-field-group">
+                <label data-i18n="labelPassword">Maxfiy parol:</label>
+                <input type="password" class="opt-input" id="protect-password-input" placeholder="Parolni kiriting..." autocomplete="new-password">
+              </div>
+            </div>
+
+            <!-- 8. Unlock Options -->
+            <div class="tool-opt-panel" id="opt-panel-unlock" style="display: none;">
+              <div class="opt-field-group">
+                <label data-i18n="labelUnlockPw">Fayl paroli:</label>
+                <input type="password" class="opt-input" id="unlock-password-input" placeholder="Mavjud parolni kiriting (agar bo‘lsa)...">
+              </div>
+            </div>
+
+            <!-- 9. PDF to Images Options -->
+            <div class="tool-opt-panel" id="opt-panel-pdf_to_images" style="display: none;">
+              <div class="opt-field-group">
+                <label data-i18n="labelImgFormat">Rasm formati:</label>
+                <div class="opt-radios" id="pdf-img-format-radios">
+                  <button type="button" class="opt-radio-btn active" data-val="png">PNG (Sifatli)</button>
+                  <button type="button" class="opt-radio-btn" data-val="jpeg">JPG (Kichik hajm)</button>
+                </div>
+                <label style="min-width: 60px;" data-i18n="labelDpi">Sifat:</label>
+                <div class="opt-radios" id="pdf-img-dpi-radios">
+                  <button type="button" class="opt-radio-btn active" data-val="150">150 DPI</button>
+                  <button type="button" class="opt-radio-btn" data-val="300">300 DPI (HD)</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Dynamic File Drop Zone -->
+          <div class="drop-zone file-drop-area" id="pdf-tool-drop-zone" data-accept=".pdf">
+            <input type="file" class="file-input-el" id="pdf-tool-file-input" accept=".pdf">
+            <div class="upload-icon-wrapper">
+              <svg class="upload-cloud-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="12" y1="18" x2="12" y2="12"></line><line x1="9" y1="15" x2="12" y2="12"></line><line x1="15" y1="15" x2="12" y2="12"></line></svg>
+            </div>
+            <h3 id="pdf-drop-title">Faylingizni bu yerga tashlang</h3>
+            <p class="drop-sub" id="pdf-drop-sub">yoki quyidagi tugmani bosib kompyuterdan tanlang</p>
+            <div class="btn-browse-trigger-wrap">
+              <button type="button" class="btn btn-primary btn-sm btn-browse-trigger">
+                <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+                <span id="pdf-btn-select-text">📂 Faylni Tanlash</span>
+              </button>
+            </div>
+            <div class="format-pills" id="pdf-tool-format-pills">
+              <span class="pill pill-pdf">📑 Faqat .PDF fayllar</span>
+            </div>
+          </div>
+
+          <!-- Selected File Action Box -->
+          <div class="selected-file-box selected-file-panel" id="pdf-tool-selected-box" style="display: none;">
+            <div class="file-info-col">
+              <div class="file-icon-badge" id="pdf-tool-icon-badge" style="background:#dc2626;">PDF</div>
+              <div class="file-meta" style="flex:1;">
+                <span class="file-name target-file-name" id="pdf-tool-file-name">hujjat.pdf</span>
+                <span class="file-size target-file-size" id="pdf-tool-file-size">2.4 MB</span>
+                <div class="multi-files-list" id="pdf-tool-multi-list" style="display: none;"></div>
+              </div>
+            </div>
+            <div class="file-action-col">
+              <button class="btn btn-secondary btn-sm btn-cancel-action" id="pdf-tool-btn-cancel" data-i18n="btnCancel">✖ Bekor qilish</button>
+              <button class="btn btn-primary btn-process-action" id="pdf-tool-btn-process">
+                <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                <span class="btn-process-text" id="pdf-tool-btn-process-text">Bajarish</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Result Box -->
+          <div class="conversion-result result-panel" id="pdf-tool-result-box" style="display: none;">
+            <div class="result-header">
+              <div class="success-indicator">
+                <span class="checkmark-circle">✓</span>
+                <div>
+                  <h4 id="pdf-tool-result-title">Amal Muvaffaqiyatli Bajarildi!</h4>
+                  <p class="res-sub-info" id="pdf-tool-result-desc">Tayyor hujjatni quyidagi tugma orqali yuklab olishingiz mumkin.</p>
+                </div>
+              </div>
+              <a href="#" class="btn btn-success btn-lg download-btn-target" id="pdf-tool-download-btn">
+                <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                <span id="pdf-tool-download-btn-text">Hujjatni Yuklab Olish</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         2-BO'LIM: ALIFBO KONVERTERI (KIRILL, LOTIN, YANGI LOTIN)
+         ==================================================================== -->
+    <section id="module-alifbo" class="tab-content">
+      <div class="card">
+        <div class="card-header-bar">
+          <div class="card-title-group">
+            <h2 data-i18n="alifboHeaderTitle">🔤 O‘zbek Alifbosi Konverteri (Word, Excel va Matn)</h2>
+            <p data-i18n="alifboHeaderDesc">Kirill, Eski Lotin va Yangi Lotin (Ö, Ğ, Ş, Ç) alifbolari o‘rtasida formatni buzmasdan o‘girish.</p>
+          </div>
+          <span class="pill pill-docx">Word (.docx) & Excel (.xlsx)</span>
+        </div>
+
+        <!-- Direction Radios -->
+        <div class="mode-selector-grid">
+          <div class="mode-radio-card active" data-mode="cyr_to_new_lat">
+            <div class="mode-radio-indicator"></div>
+            <div class="mode-info">
+              <strong data-i18n="dirCyrToNew">Кирилл ➔ Yangi Lotin</strong>
+              <span>Ў, Ғ, Ш, Ч ➔ <b>Ö, Ğ, Ş, Ç</b></span>
+            </div>
+          </div>
+          <div class="mode-radio-card" data-mode="old_lat_to_new_lat">
+            <div class="mode-radio-indicator"></div>
+            <div class="mode-info">
+              <strong data-i18n="dirOldToNew">Eski Lotin ➔ Yangi Lotin</strong>
+              <span>O', G', Sh, Ch ➔ <b>Ö, Ğ, Ş, Ç</b></span>
+            </div>
+          </div>
+          <div class="mode-radio-card" data-mode="cyr_to_old_lat">
+            <div class="mode-radio-indicator"></div>
+            <div class="mode-info">
+              <strong data-i18n="dirCyrToOld">Кирилл ➔ Amaldagi Lotin</strong>
+              <span>Ў, Ғ, Ш, Ч ➔ <b>Oʻ, Gʻ, Sh, Ch (1995)</b></span>
+            </div>
+          </div>
+          <div class="mode-radio-card" data-mode="lat_to_cyr">
+            <div class="mode-radio-indicator"></div>
+            <div class="mode-info">
+              <strong data-i18n="dirLatToCyr">Lotin ➔ Кирилл</strong>
+              <span>Ö, Ğ, Ş, Ç / O', G', Sh, Ch ➔ <b>Ў, Ғ, Ш, Ч</b></span>
+            </div>
+          </div>
+        </div>
+
+        <!-- File Upload Area for Alifbo -->
+        <div class="drop-zone file-drop-area" data-accept=".docx,.doc,.xlsx,.xls,.txt">
+          <input type="file" class="file-input-el" accept=".docx,.doc,.xlsx,.xls,.txt">
+          <div class="upload-icon-wrapper">
+            <svg class="upload-cloud-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/><polyline points="12 12 12 6 9 9"/><polyline points="12 6 15 9"/></svg>
+          </div>
+          <h3 data-i18n="fileDropTitle">Word (.docx, .doc) yoki Excel (.xlsx) faylingizni bu yerga tashlang</h3>
+          <p class="drop-sub" data-i18n="fileDropSub">yoki quyidagi tugmani bosib tanlang</p>
+          <div class="btn-browse-trigger-wrap">
+            <button type="button" class="btn btn-primary btn-sm btn-browse-trigger">
+              <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+              <span data-i18n="btnSelectDoc">📂 Word / Excel Faylni Tanlash</span>
+            </button>
+          </div>
+          <div class="format-pills">
+            <span class="pill pill-docx">📄 Word (.docx, .doc)</span>
+            <span class="pill pill-xlsx">📊 Excel (.xlsx, .xls)</span>
+            <span class="pill pill-txt">📝 Matn (.txt)</span>
+          </div>
+          <p class="format-note" data-i18n="formatNote">🔒 Shriftlar, ranglar, jadvallar va Excel formulalari 100% buzilmasdan saqlanadi!</p>
+        </div>
+
+        <!-- File Action Box -->
+        <div class="selected-file-box selected-file-panel" style="display: none;">
+          <div class="file-info-col">
+            <div class="file-icon-badge">DOCX</div>
+            <div class="file-meta">
+              <span class="file-name target-file-name">hujjat.docx</span>
+              <span class="file-size target-file-size">1.5 MB</span>
+            </div>
+          </div>
+          <div class="file-action-col">
+            <button class="btn btn-secondary btn-sm btn-cancel-action" data-i18n="btnCancel">✖ Bekor qilish</button>
+            <button class="btn btn-primary btn-process-action">
+              <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+              <span class="btn-process-text" data-i18n="btnConvertAlifbo">Alifboga O‘girish</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Result Box -->
+        <div class="conversion-result result-panel" style="display: none;">
+          <div class="result-header">
+            <div class="success-indicator">
+              <span class="checkmark-circle">✓</span>
+              <div>
+                <h4 data-i18n="alifboSuccessTitle">Hujjat Yangi Alifboga Muvaffaqiyatli O‘tkazildi!</h4>
+                <p class="res-sub-info">Formatlar va jadvallar to‘liq saqlandi</p>
+              </div>
+            </div>
+            <a href="#" class="btn btn-success btn-lg download-btn-target">
+              <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+              <span data-i18n="btnDownloadResult">Yangi Hujjatni Yuklab Olish</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Text Editor for Alifbo -->
+        <div style="margin-top: 28px;">
+          <h4 style="margin-bottom: 12px; color: var(--text-primary); font-size: 1rem;" data-i18n="liveEditorTitle">✍️ Jonli Matn Muharriri (Tezkor o‘girish)</h4>
+          <div class="text-editor-grid">
+            <div class="editor-col">
+              <div class="editor-toolbar">
+                <span class="editor-label"><span class="indicator-dot dot-yellow"></span> <span data-i18n="inputOriginalText">Asl Matn</span></span>
+                <div class="toolbar-actions">
+                  <button class="btn-text-action btn-sample-alifbo" data-i18n="btnSample">💡 Namuna</button>
+                  <button class="btn-text-action btn-clear-alifbo" data-i18n="btnClear">🗑 Tozalash</button>
+                </div>
+              </div>
+              <textarea class="editor-textarea alifbo-input" placeholder="Matnni bu yerga kiriting... (masalan: Ўзбекистон Республикаси, g'alaba, shahar, chiroyli)"></textarea>
+              <div class="editor-footer">
+                <span class="alifbo-in-counter">0 so‘z | 0 belgi</span>
+                <button class="btn btn-primary btn-sm btn-run-alifbo-text" data-i18n="btnRunConvert">⚡ O‘girish</button>
+              </div>
+            </div>
+
+            <div class="editor-col">
+              <div class="editor-toolbar">
+                <span class="editor-label"><span class="indicator-dot dot-green"></span> <span data-i18n="outputConvertedText">O‘girilgan Matn</span></span>
+                <button class="btn-text-action btn-copy-alifbo" data-i18n="btnCopy">📋 Nusxa Olish</button>
+              </div>
+              <textarea class="editor-textarea alifbo-output" readonly placeholder="Natija bu yerda chiqadi..."></textarea>
+              <div class="editor-footer">
+                <span class="alifbo-out-counter">0 so‘z | 0 belgi</span>
+                <span class="exec-pill alifbo-speed">0 ms</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         3-BO'LIM: AI TARJIMA (RUS, O'ZBEK, INGLIZ)
+         ==================================================================== -->
+    <section id="module-translate" class="tab-content">
+      <div class="card">
+        <div class="card-header-bar">
+          <div class="card-title-group">
+            <h2 data-i18n="transHeaderTitle">🌐 AI Hujjat va Matn Tarjimoni (Rus, O‘zbek, Ingliz)</h2>
+            <p data-i18n="transHeaderDesc">Word, Excel, PDF va matnlarni tillar o‘rtasida xatosiz va ravon tarjima qilish.</p>
+          </div>
+          <span class="pill pill-xlsx">AI Smart Translation</span>
+        </div>
+
+        <!-- 4 Translation Directions -->
+        <div class="mode-selector-grid">
+          <div class="mode-radio-card active" data-mode="ru_to_uz">
+            <div class="mode-radio-indicator"></div>
+            <div class="mode-info">
+              <strong>🇷🇺 ➔ 🇺🇿 Ruscha ➔ O‘zbekcha</strong>
+              <span data-i18n="transRuUzDesc">Rus tilidagi hujjatlarni o‘zbekchaga tarjima qilish</span>
+            </div>
+          </div>
+          <div class="mode-radio-card" data-mode="uz_to_ru">
+            <div class="mode-radio-indicator"></div>
+            <div class="mode-info">
+              <strong>🇺🇿 ➔ 🇷🇺 O‘zbekcha ➔ Ruscha</strong>
+              <span data-i18n="transUzRuDesc">O‘zbekcha hujjatlarni rus tiliga tarjima qilish</span>
+            </div>
+          </div>
+          <div class="mode-radio-card" data-mode="en_to_uz">
+            <div class="mode-radio-indicator"></div>
+            <div class="mode-info">
+              <strong>🇬🇧 ➔ 🇺🇿 Inglizcha ➔ O‘zbekcha</strong>
+              <span data-i18n="transEnUzDesc">Ingliz tilidagi fayllarni o‘zbekchaga tarjima qilish</span>
+            </div>
+          </div>
+          <div class="mode-radio-card" data-mode="uz_to_en">
+            <div class="mode-radio-indicator"></div>
+            <div class="mode-info">
+              <strong>🇺🇿 ➔ 🇬🇧 O‘zbekcha ➔ Inglizcha</strong>
+              <span data-i18n="transUzEnDesc">O‘zbekcha fayllarni ingliz tiliga tarjima qilish</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- File Upload for Translation -->
+        <div class="drop-zone file-drop-area" data-accept=".docx,.doc,.xlsx,.xls,.pdf,.txt">
+          <input type="file" class="file-input-el" accept=".docx,.doc,.xlsx,.xls,.pdf,.txt">
+          <div class="upload-icon-wrapper">
+            <svg class="upload-cloud-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+          </div>
+          <h3 data-i18n="transDropTitle">Tarjima qilinadigan faylni bu yerga tashlang</h3>
+          <p class="drop-sub" data-i18n="transDropSub">yoki quyidagi tugmani bosib tanlang</p>
+          <div class="btn-browse-trigger-wrap">
+            <button type="button" class="btn btn-primary btn-sm btn-browse-trigger">
+              <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+              <span data-i18n="btnSelectTrans">📂 Hujjatni Tanlash</span>
+            </button>
+          </div>
+          <div class="format-pills">
+            <span class="pill pill-docx">Word (.docx, .doc)</span>
+            <span class="pill pill-xlsx">Excel (.xlsx)</span>
+            <span class="pill pill-pdf">PDF (.pdf)</span>
+          </div>
+          <p class="format-note" data-i18n="transNote">🔒 Hujjatdagi jadvallar va shriftlar tartibi saqlangan holda to‘liq tarjima qilib beriladi.</p>
+        </div>
+
+        <!-- File Action Box -->
+        <div class="selected-file-box selected-file-panel" style="display: none;">
+          <div class="file-info-col">
+            <div class="file-icon-badge">DOCX</div>
+            <div class="file-meta">
+              <span class="file-name target-file-name">hujjat.docx</span>
+              <span class="file-size target-file-size">1.2 MB</span>
+            </div>
+          </div>
+          <div class="file-action-col">
+            <button class="btn btn-secondary btn-sm btn-cancel-action" data-i18n="btnCancel">✖ Bekor qilish</button>
+            <button class="btn btn-primary btn-process-action">
+              <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+              <span class="btn-process-text" data-i18n="btnRunTranslateDoc">Hujjatni Tarjima Qilish</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Result Box -->
+        <div class="conversion-result result-panel" style="display: none;">
+          <div class="result-header">
+            <div class="success-indicator">
+              <span class="checkmark-circle">✓</span>
+              <div>
+                <h4 data-i18n="transSuccessTitle">Hujjat Muvaffaqiyatli Tarjima Qilindi!</h4>
+                <p class="res-sub-info" data-i18n="transSuccessDesc">Tarjima qilingan faylni yuklab olishingiz mumkin</p>
+              </div>
+            </div>
+            <a href="#" class="btn btn-success btn-lg download-btn-target">
+              <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+              <span data-i18n="btnDownloadTrans">Tarjima Qilingan Hujjatni Yuklab Olish</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Text Translation Live Editor -->
+        <div style="margin-top: 28px;">
+          <h4 style="margin-bottom: 12px; color: var(--text-primary); font-size: 1rem;" data-i18n="transLiveTitle">✍️ Jonli Matn Tarjimoni</h4>
+          <div class="text-editor-grid">
+            <div class="editor-col">
+              <div class="editor-toolbar">
+                <span class="editor-label"><span class="indicator-dot dot-yellow"></span> <span data-i18n="transInputLabel">Asl Matn</span></span>
+                <div class="toolbar-actions">
+                  <button class="btn-text-action btn-sample-trans" data-i18n="btnSample">💡 Namuna</button>
+                  <button class="btn-text-action btn-clear-trans" data-i18n="btnClear">🗑 Tozalash</button>
+                </div>
+              </div>
+              <textarea class="editor-textarea trans-input" placeholder="Tarjima qilinadigan matnni kiriting..."></textarea>
+              <div class="editor-footer">
+                <span class="trans-in-counter">0 so‘z | 0 belgi</span>
+                <button class="btn btn-primary btn-sm btn-run-trans-text" data-i18n="btnRunTranslate">⚡ Tarjima Qilish</button>
+              </div>
+            </div>
+
+            <div class="editor-col">
+              <div class="editor-toolbar">
+                <span class="editor-label"><span class="indicator-dot dot-green"></span> <span data-i18n="transOutputLabel">Tarjima Natijasi</span></span>
+                <button class="btn-text-action btn-copy-trans" data-i18n="btnCopy">📋 Nusxa Olish</button>
+              </div>
+              <textarea class="editor-textarea trans-output" readonly placeholder="Tarjima natijasi bu yerda chiqadi..."></textarea>
+              <div class="editor-footer">
+                <span class="trans-out-counter">0 so‘z | 0 belgi</span>
+                <span class="exec-pill trans-speed">0 ms</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         4-BO'LIM: DASTUR HAQIDA & MUALLIF (DONAT: KARTA VA QR KOD)
+         ==================================================================== -->
+    <section id="module-about" class="tab-content">
+      <div class="card">
+        <div class="card-header-bar">
+          <div class="card-title-group">
+            <h2 data-i18n="aboutTitle">ℹ️ Dastur Haqida va Loyihani Qo‘llab-quvvatlash</h2>
+            <p data-i18n="aboutSub">Dastur yaratuvchisi va loyiha rivoji uchun donat (hissa qo‘shish).</p>
+          </div>
+          <span class="pill pill-docx">Ismoilov Nodir</span>
+        </div>
+
+        <!-- Support Card Section (Faqat Karta Raqam) -->
+        <div class="donate-card-wrapper">
+          <div class="author-card-box premium-card-mockup">
+            <div class="card-glass-glow"></div>
+            <div class="card-content-inner">
+              <div class="card-top-row">
+                <div class="card-chip-gold">
+                  <div class="chip-inner-lines"></div>
+                </div>
+                <div class="card-pay-systems">
+                  <span class="pay-system-tag">UZCARD</span>
+                  <span class="pay-system-divider">•</span>
+                  <span class="pay-system-tag">HUMO</span>
+                  <span class="pay-system-divider">•</span>
+                  <span class="pay-system-tag">VISA</span>
+                </div>
+              </div>
+
+              <div class="card-mid-row">
+                <div class="card-number-label">CARD NUMBER</div>
+                <div class="card-number-display" id="card-number-text">5614 6819 0834 3415</div>
+              </div>
+
+              <div class="card-bottom-row">
+                <div class="card-holder-info">
+                  <span class="card-holder-label" data-i18n="cardCreatorLabel">Автор Программы</span>
+                  <span class="card-holder-name">ISMOILOV NODIR</span>
+                </div>
+                <div class="card-status-badge">
+                  <span>DONATE</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card-action-bar">
+            <button id="btn-copy-card" class="btn-copy-card-modern">
+              <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+              <span data-i18n="btnCopyCard">Скопировать номер карты (5614 6819 0834 3415)</span>
+            </button>
+            <p class="donate-support-hint" data-i18n="donateHint">
+              Вы можете поддержать развитие программы через любое банковское приложение (Click, Payme, Zoomrad, Anorbank, Uzum и др.).
+            </p>
+          </div>
+        </div>
+
+        <!-- Project Mission / Info -->
+        <div class="mission-box-card">
+          <div class="mission-header">
+            <div class="mission-icon-badge">🎯</div>
+            <h4 data-i18n="missionTitle">Цель и Миссия Проекта</h4>
+          </div>
+          <p data-i18n="missionDesc">
+            Данный программный комплекс разработан <b>Исмоиловым Нодиром</b> с целью облегчения документооборота, качественной и точной конвертации PDF в Word, удобного перехода на новый алфавит и мгновенного перевода документов между русским, узбекским и английским языками.
+          </p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Global Animated Loading Modal Overlay (O'rtada aylanuvchi zamonaviy zagruzka) -->
+  <div id="loading-overlay" class="loading-overlay">
+    <div class="loading-card">
+      <div class="spinner-container">
+        <div class="spinner-glow-ring"></div>
+        <div class="spinner-ring outer-ring"></div>
+        <div class="spinner-ring inner-ring"></div>
+        <div class="spinner-center-logo">
+          <img src="/static/img/logo_alifba.jpg" alt="Alifba AI">
+        </div>
+      </div>
+
+      <!-- Real-time Percentage Counter -->
+      <div class="loading-percent-wrap">
+        <span class="loading-percent-val" id="loading-percent">0%</span>
+      </div>
+
+      <h3 class="loading-title" id="loading-title" data-i18n="loadingTitle">Hujjat Qayta Ishlanmoqda...</h3>
+      <p class="loading-subtitle" id="loading-subtitle" data-i18n="loadingSub">AI matnlar, shriftlar va jadvallarni xatosiz tayyorlamoqda</p>
+
+      <!-- Accurate percentage progress bar -->
+      <div class="loading-progress-bar">
+        <div class="loading-progress-fill" id="loading-progress-fill" style="width: 0%;"></div>
+      </div>
+
+      <div class="loading-status-bar" id="loading-status-text">
+        Bajarilmoqda: 0%
+      </div>
+
+      <div class="loading-badge">
+        <span class="live-pulse-dot"></span>
+        <span id="loading-timer-text">Jarayon davom etmoqda: 0s</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div id="toast" class="toast"></div>
+
+  <!-- Footer -->
+  <footer class="app-footer">
+    <p>Alifba AI • <span data-i18n="footerCreator">Dastur yaratuvchisi:</span> <b>Ismoilov Nodir</b> • 2026</p>
+  </footer>
+
+  <script src="/static/js/main.js"></script>
+</body>
+</html>

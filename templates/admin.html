@@ -1,0 +1,1577 @@
+<!DOCTYPE html>
+<html lang="uz" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Alifba AI • Admin Boshqaruv Paneli</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/css/style.css">
+  <link rel="icon" href="/static/img/logo_alifba.jpg">
+  <style>
+    /* Admin Maxsus Qo'shimcha Styllar */
+    .admin-container {
+      max-width: 1240px;
+      margin: 20px auto;
+      padding: 0 20px;
+    }
+    .admin-top-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-bottom: 24px;
+      padding: 18px 24px;
+      background: var(--bg-card);
+      border: 1.5px solid var(--border-light);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-sm);
+    }
+    .admin-title-wrap {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .admin-badge {
+      background: linear-gradient(135deg, #0284c7 0%, #0ea5e9 100%);
+      color: #fff;
+      font-size: 0.72rem;
+      font-weight: 800;
+      padding: 4px 10px;
+      border-radius: 999px;
+      letter-spacing: 0.5px;
+    }
+    .admin-nav-tabs {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 24px;
+    }
+    .admin-nav-btn {
+      padding: 10px 20px;
+      border-radius: var(--radius-md);
+      border: 1.5px solid var(--border-light);
+      background: var(--bg-card);
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: var(--transition);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .admin-nav-btn:hover {
+      border-color: var(--blue-primary);
+      color: var(--blue-primary);
+      background: var(--blue-light);
+    }
+    .admin-nav-btn.active {
+      background: linear-gradient(135deg, #0284c7 0%, #0ea5e9 100%);
+      color: #fff;
+      border-color: #0284c7;
+      box-shadow: 0 4px 14px rgba(14, 165, 233, 0.3);
+    }
+    .stats-grid-admin {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+    .metric-card {
+      background: var(--bg-card);
+      border: 1.5px solid var(--border-light);
+      border-radius: var(--radius-lg);
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      box-shadow: var(--shadow-sm);
+      transition: var(--transition);
+    }
+    .metric-card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+      border-color: var(--blue-primary);
+    }
+    .metric-icon-box {
+      width: 48px;
+      height: 48px;
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+      background: var(--blue-light);
+      color: var(--blue-primary);
+      flex-shrink: 0;
+    }
+    .metric-info h4 {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+    }
+    .metric-info strong {
+      font-size: 1.5rem;
+      color: var(--text-primary);
+      font-weight: 800;
+    }
+    /* Foydalanuvchilar Boshqaruvi */
+    .filter-search-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-bottom: 18px;
+    }
+    .search-input-wrap {
+      flex: 1;
+      min-width: 260px;
+      position: relative;
+    }
+    .search-input-wrap input {
+      width: 100%;
+      padding: 10px 16px;
+      padding-left: 38px;
+      border: 1.5px solid var(--border-light);
+      border-radius: var(--radius-md);
+      background: var(--bg-card);
+      color: var(--text-primary);
+      font-size: 0.92rem;
+      outline: none;
+      transition: var(--transition);
+    }
+    .search-input-wrap input:focus {
+      border-color: var(--blue-primary);
+      box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.2);
+    }
+    .search-icon-svg {
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+      width: 18px;
+      height: 18px;
+    }
+    .filter-pills {
+      display: flex;
+      gap: 6px;
+    }
+    .filter-pill-btn {
+      padding: 8px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--border-light);
+      background: var(--bg-card);
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    .filter-pill-btn.active {
+      background: var(--blue-light);
+      color: var(--blue-primary);
+      border-color: var(--blue-primary);
+      font-weight: 700;
+    }
+    .data-table-wrapper {
+      overflow-x: auto;
+      border: 1.5px solid var(--border-light);
+      border-radius: var(--radius-lg);
+      background: var(--bg-card);
+      box-shadow: var(--shadow-sm);
+    }
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 0.88rem;
+    }
+    .data-table th {
+      background: var(--bg-subtle);
+      padding: 14px 16px;
+      color: var(--text-secondary);
+      font-weight: 700;
+      border-bottom: 1.5px solid var(--border-light);
+      white-space: nowrap;
+    }
+    .data-table td {
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--border-light);
+      color: var(--text-primary);
+      vertical-align: middle;
+    }
+    .data-table tr:last-child td {
+      border-bottom: none;
+    }
+    .data-table tr:hover {
+      background: var(--bg-hover);
+    }
+    .user-avatar-tag {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #0284c7 0%, #38bdf8 100%);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 0.85rem;
+      flex-shrink: 0;
+    }
+    .user-cell-meta {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 0.74rem;
+      font-weight: 700;
+    }
+    .status-vip {
+      background: #fef3c7;
+      color: #b45309;
+      border: 1px solid #fde68a;
+    }
+    [data-theme="dark"] .status-vip {
+      background: rgba(245, 158, 11, 0.2);
+      color: #fbbf24;
+      border-color: rgba(245, 158, 11, 0.4);
+    }
+    .status-free {
+      background: #f1f5f9;
+      color: #475569;
+      border: 1px solid #cbd5e1;
+    }
+    [data-theme="dark"] .status-free {
+      background: #1a2a4b;
+      color: #cbd5e1;
+      border-color: rgba(56, 189, 248, 0.2);
+    }
+    .status-blocked {
+      background: #fee2e2;
+      color: #b91c1c;
+      border: 1px solid #fecaca;
+    }
+    [data-theme="dark"] .status-blocked {
+      background: rgba(239, 68, 68, 0.2);
+      color: #fca5a5;
+      border-color: rgba(239, 68, 68, 0.4);
+    }
+    .action-btn-group {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+    .btn-act {
+      padding: 6px 12px;
+      border-radius: var(--radius-sm);
+      font-size: 0.78rem;
+      font-weight: 700;
+      border: 1px solid transparent;
+      cursor: pointer;
+      transition: var(--transition);
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .btn-act-vip {
+      background: #fef3c7;
+      color: #b45309;
+      border-color: #fde68a;
+    }
+    .btn-act-vip:hover {
+      background: #fde68a;
+    }
+    .btn-act-block {
+      background: #fee2e2;
+      color: #b91c1c;
+      border-color: #fecaca;
+    }
+    .btn-act-block:hover {
+      background: #fca5a5;
+    }
+    .btn-act-del {
+      background: #f1f5f9;
+      color: #64748b;
+      border-color: #cbd5e1;
+    }
+    .btn-act-del:hover {
+      background: #ef4444;
+      color: #fff;
+    }
+    /* Settings Form */
+    .settings-grid-form {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 20px;
+    }
+    .settings-card-box {
+      background: var(--bg-card);
+      border: 1.5px solid var(--border-light);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      box-shadow: var(--shadow-sm);
+    }
+    .settings-card-box h3 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .form-group-field {
+      margin-bottom: 16px;
+    }
+    .form-group-field label {
+      display: block;
+      font-size: 0.84rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 6px;
+    }
+    .form-group-field input, .form-group-field select, .form-group-field textarea {
+      width: 100%;
+      padding: 10px 14px;
+      border: 1.5px solid var(--border-light);
+      border-radius: var(--radius-md);
+      background: var(--bg-input);
+      color: var(--text-primary);
+      font-size: 0.9rem;
+      outline: none;
+      transition: var(--transition);
+    }
+    .form-group-field input:focus, .form-group-field select:focus, .form-group-field textarea:focus {
+      border-color: var(--blue-primary);
+      box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.2);
+    }
+    .form-switch-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 14px;
+      background: var(--bg-subtle);
+      border-radius: var(--radius-md);
+      margin-bottom: 14px;
+    }
+    .form-switch-row span {
+      font-size: 0.86rem;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+    /* Switch toggle */
+    .switch-toggle-el {
+      position: relative;
+      display: inline-block;
+      width: 48px;
+      height: 26px;
+    }
+    .switch-toggle-el input { opacity: 0; width: 0; height: 0; }
+    .slider-toggle {
+      position: absolute;
+      cursor: pointer;
+      inset: 0;
+      background-color: #cbd5e1;
+      transition: .3s;
+      border-radius: 34px;
+    }
+    .slider-toggle:before {
+      position: absolute;
+      content: "";
+      height: 20px;
+      width: 20px;
+      left: 3px;
+      bottom: 3px;
+      background-color: white;
+      transition: .3s;
+      border-radius: 50%;
+    }
+    input:checked + .slider-toggle {
+      background-color: #0284c7;
+    }
+    input:checked + .slider-toggle:before {
+      transform: translateX(22px);
+    }
+    /* VIP Activate Modal */
+    .modal-overlay-admin {
+      position: fixed;
+      inset: 0;
+      background: rgba(10, 15, 29, 0.75);
+      backdrop-filter: blur(8px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 10000;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s ease;
+    }
+    .modal-overlay-admin.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .modal-box-admin {
+      background: var(--bg-card);
+      border: 2px solid var(--border-blue);
+      border-radius: var(--radius-xl);
+      padding: 30px;
+      width: 90%;
+      max-width: 480px;
+      box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.5);
+      animation: modalPopIn 0.3s ease;
+    }
+    .login-box-center {
+      max-width: 400px;
+      margin: 80px auto;
+      background: var(--bg-card);
+      border: 2px solid var(--border-blue);
+      border-radius: var(--radius-xl);
+      padding: 36px 30px;
+      box-shadow: var(--shadow-lg);
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Agar Admin tizimga kirmagan bo'lsa: Login oynasi -->
+  {% if not is_admin %}
+  <div class="login-box-center">
+    <div class="logo-box brand-logo-large" style="margin: 0 auto 16px;">
+      <img src="/static/img/logo_alifba.jpg" alt="Alifba AI" class="brand-logo-img">
+    </div>
+    <h2 style="font-size: 1.4rem; font-weight: 800; color: var(--text-primary); margin-bottom: 6px;">Admin Panelga Kirish</h2>
+    <p style="font-size: 0.84rem; color: var(--text-muted); margin-bottom: 24px;">Alifba AI Studio boshqaruv tizimi</p>
+
+    <form id="admin-login-form" action="javascript:void(0);" method="POST">
+      <div class="form-group-field" style="text-align: left;">
+        <label>Admin Logini</label>
+        <input type="text" id="admin-user-input" required placeholder="Loginni kiriting" autocomplete="username" autofocus>
+      </div>
+      <div class="form-group-field" style="text-align: left;">
+        <label>Admin Paroli</label>
+        <div style="position: relative;">
+          <input type="password" id="admin-pass-input" required placeholder="••••••••" autocomplete="current-password" style="padding-right: 42px;">
+          <button type="button" id="btn-toggle-login-pass" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer; font-size: 1.1rem; color: var(--text-muted); padding: 4px;" title="Parolni ko'rsatish/yashirish">👁️</button>
+        </div>
+      </div>
+      <div id="login-error-msg" style="color: #ef4444; font-size: 0.82rem; font-weight: 600; margin-bottom: 14px; display: none;"></div>
+      <button type="submit" id="btn-admin-submit-login" class="btn btn-primary btn-lg" style="width: 100%; justify-content: center;">
+        🔒 Kirish
+      </button>
+    </form>
+    <div style="margin-top: 18px; text-align: center; font-size: 0.84rem;">
+      <a href="/" style="color: var(--text-muted); text-decoration: none;">← Saytga qaytish</a>
+    </div>
+  </div>
+
+  {% else %}
+
+  <!-- Header -->
+  <header class="app-header">
+    <div class="header-container">
+      <div class="brand">
+        <div class="logo-box brand-logo-large">
+          <img src="/static/img/logo_alifba.jpg" alt="Alifba AI" class="brand-logo-img">
+        </div>
+        <div class="brand-text">
+          <div class="brand-title-row">
+            <h1>Alifba <span class="gradient-text">Admin</span></h1>
+            <span class="admin-badge">BOSHQARUV</span>
+          </div>
+          <p>Foydalanuvchilar, VIP obunalar va tizim statistikasi</p>
+        </div>
+      </div>
+
+      <div class="header-actions">
+        <!-- Parolni O'zgartirish tugmasi -->
+        <button id="btn-open-pwd-modal" class="btn btn-secondary btn-sm" type="button" style="border: 1.5px solid var(--blue-primary); color: var(--blue-primary); font-weight: 700;">
+          🔑 Parolni O‘zgartirish
+        </button>
+
+        <!-- Mavzu o'zgartirgich -->
+        <button id="theme-toggle-btn" class="theme-toggle-btn" type="button">
+          <span class="theme-btn-icon">☀️</span>
+          <span class="theme-btn-label">Mavzu</span>
+        </button>
+
+        <a href="/" class="btn btn-secondary btn-sm" target="_blank">
+          🌐 Asosiy Saytni Ochish
+        </a>
+
+        <button id="btn-admin-logout" class="btn btn-sm" style="background: #fee2e2; color: #dc2626; border: 1px solid #fecaca;">
+          🚪 Chiqish
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Admin Asosiy Maydoni -->
+  <main class="admin-container">
+    
+    <!-- Nav Tabs -->
+    <div class="admin-nav-tabs">
+      <button class="admin-nav-btn active" data-tab="tab-overview">
+        📊 Statistika & Tashriflar Hisoblagichi
+      </button>
+      <button class="admin-nav-btn" data-tab="tab-logs">
+        📜 O‘girilgan Hujjatlar Tarixi
+      </button>
+      <button class="admin-nav-btn" data-tab="tab-users">
+        👥 Foydalanuvchilar (Zaxira)
+      </button>
+      <button class="admin-nav-btn" data-tab="tab-settings">
+        ⚙️ Tizim Sozlamalari
+      </button>
+    </div>
+
+    <!-- ====================================================================
+         1-BO'LIM: STATISTIKA VA TASHRIFLAR HISOBLAGICHI (ASOSIY)
+         ==================================================================== -->
+    <section id="tab-overview" class="admin-section active">
+      
+      <div class="stats-grid-admin">
+        <div class="metric-card">
+          <div class="metric-icon-box" style="background: #e0f2fe; color: #0284c7;">👁️</div>
+          <div class="metric-info">
+            <h4>Bugungi Tashriflar (Odamlar)</h4>
+            <strong id="m-today-visitors" style="color: #0284c7;">0</strong>
+            <p style="font-size: 0.78rem; color: var(--text-muted); margin-top: 2px;">Sahifa ochishlar: <b id="m-today-pageviews">0</b> ta</p>
+          </div>
+        </div>
+
+        <div class="metric-card">
+          <div class="metric-icon-box" style="background: #f0fdf4; color: #16a34a;">🌐</div>
+          <div class="metric-info">
+            <h4>Jami Saytga Kirganlar</h4>
+            <strong id="m-total-visitors" style="color: #16a34a;">0</strong>
+            <p style="font-size: 0.78rem; color: var(--text-muted); margin-top: 2px;">Jami ko‘rishlar: <b id="m-total-pageviews">0</b> ta</p>
+          </div>
+        </div>
+
+        <div class="metric-card">
+          <div class="metric-icon-box" style="background: #fef3c7; color: #b45309;">⚡</div>
+          <div class="metric-info">
+            <h4>Bugungi Hujjatlar / O‘girishlar</h4>
+            <strong id="m-today-actions" style="color: #d97706;">0</strong>
+            <p style="font-size: 0.78rem; color: var(--text-muted); margin-top: 2px;">Fayl va matn o‘girishlar</p>
+          </div>
+        </div>
+
+        <div class="metric-card">
+          <div class="metric-icon-box" style="background: #f3e8ff; color: #9333ea;">📈</div>
+          <div class="metric-info">
+            <h4>Jami O‘girishlar Soni</h4>
+            <strong id="m-total-actions" style="color: #9333ea;">0</strong>
+            <p style="font-size: 0.78rem; color: var(--text-muted); margin-top: 2px;">Barcha konversiyalar</p>
+          </div>
+        </div>
+
+        <div class="metric-card">
+          <div class="metric-icon-box" style="background: #f1f5f9; color: #475569;">💾</div>
+          <div class="metric-info">
+            <h4>Server Xotirasi (Disk)</h4>
+            <strong id="m-total-storage">0 MB</strong>
+            <p style="font-size: 0.78rem; color: var(--text-muted); margin-top: 2px;">Yuklangan & tayyor fayllar</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Saytga Kirganlar (Tashriflar Ro'yxati) -->
+      <div class="card" style="margin-top: 20px;">
+        <div class="card-header-bar" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+          <div class="card-title-group">
+            <h2>👥 Saytga Tashrif Buyurganlar Ro‘yxati (Jonli Hisoblagich)</h2>
+            <p>Saytga kim qachon va qaysi IP / qurilmadan kirganini ko‘rsatuvchi so‘nggi tashriflar</p>
+          </div>
+          <button id="btn-refresh-visits" class="btn btn-secondary btn-sm" type="button">
+            🔄 Yangilash
+          </button>
+        </div>
+
+        <div class="data-table-wrapper" style="margin-top: 14px;">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th style="width: 70px;">#ID</th>
+                <th>IP Manzili</th>
+                <th>Kirgan Vaqti</th>
+                <th>Qurilma / Brauzer (User-Agent)</th>
+              </tr>
+            </thead>
+            <tbody id="visits-table-body">
+              <tr>
+                <td colspan="4" style="text-align: center; padding: 25px; color: var(--text-muted);">
+                  Yuklanmoqda...
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Xotira tozalash kartasi -->
+      <div class="card" style="margin-top: 20px;">
+        <div class="card-header-bar">
+          <div class="card-title-group">
+            <h2>🧹 Server Xotirasini Tozalash (Storage Cleaner)</h2>
+            <p>Vaqtinchalik yuklangan PDF, Word fayllar va o‘girilgan natijalarni xavfsiz tozalash.</p>
+          </div>
+        </div>
+        <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px;">
+          <div>
+            <p style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 4px;">
+              Yuklangan fayllar: <b id="m-uploads-size">0 MB</b> | Tayyor fayllar: <b id="m-converted-size">0 MB</b>
+            </p>
+            <p style="font-size: 0.8rem; color: var(--text-muted);">
+              Foydalanuvchilar o‘girib olgan eski fayllar serverda joy olib turmasligi uchun vaqti-vaqti bilan tozalab turing.
+            </p>
+          </div>
+          <button id="btn-clean-storage" class="btn btn-primary">
+            🗑 Barcha Vaqtinchalik Fayllarni Tozalash
+          </button>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ====================================================================
+         2-BO'LIM: FOYDALANUVCHILAR VA VIP BOSHQARUV (ZAXIRADA)
+         ==================================================================== -->
+    <section id="tab-users" class="admin-section" style="display: none;">
+      
+      <!-- Tezkor filtr va qidiruv -->
+      <div class="filter-search-bar">
+        <div class="search-input-wrap">
+          <svg class="search-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <input type="text" id="user-search-input" placeholder="Ism yoki login bo'yicha qidirish (masalan: Nodir, ali77)...">
+        </div>
+
+        <div class="filter-pills">
+          <button class="filter-pill-btn active" data-filter="all">Hammasi</button>
+          <button class="filter-pill-btn" data-filter="vip">👑 Faqat VIP</button>
+          <button class="filter-pill-btn" data-filter="free">Bepul tarif</button>
+          <button class="filter-pill-btn" data-filter="blocked">🚫 Bloklanganlar</button>
+        </div>
+      </div>
+
+      <!-- Foydalanuvchilar Jadvali -->
+      <div class="data-table-wrapper">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Foydalanuvchi (Ism va Login)</th>
+              <th>Tarif Holati</th>
+              <th>Bugungi Hujjatlar</th>
+              <th>Jami O'girishlar</th>
+              <th>Ro'yxatdan O'tgan</th>
+              <th style="text-align: right;">Amallar</th>
+            </tr>
+          </thead>
+          <tbody id="users-table-body">
+            <!-- Dinamik yuklanadi -->
+            <tr>
+              <td colspan="7" style="text-align: center; padding: 30px; color: var(--text-muted);">
+                Yuklanmoqda...
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         3-BO'LIM: TIZIM VA NARXLAR SOZLAMALARI
+         ==================================================================== -->
+    <section id="tab-settings" class="admin-section" style="display: none;">
+      
+      <form id="admin-settings-form">
+        <div class="settings-grid-form">
+          
+          <!-- Asosiy Cheklovlar -->
+          <div class="settings-card-box">
+            <h3>🔒 Cheklovlar & Ro'yxatdan O'tish</h3>
+            
+            <div class="form-switch-row">
+              <div>
+                <span>Ro'yxatdan O'tishni Majburiy Qilish</span>
+                <p style="font-size: 0.76rem; color: var(--text-muted); margin-top: 2px;">
+                  Yoqilsa, faqat login qilganlar dasturni ishlata oladi
+                </p>
+              </div>
+              <label class="switch-toggle-el">
+                <input type="checkbox" id="set-require-login">
+                <span class="slider-toggle"></span>
+              </label>
+            </div>
+
+            <div class="form-group-field">
+              <label>Kunlik Bepul Limit (ta fayl)</label>
+              <input type="number" id="set-daily-limit" min="1" max="100" value="5" required>
+              <small style="color: var(--text-muted); font-size: 0.76rem;">Oddiy foydalanuvchilar 1 kunda ko'pi bilan shuncha fayl o'gira oladi</small>
+            </div>
+
+            <div class="form-group-field">
+              <label>Oylik VIP Obuna Narxi (so'mda)</label>
+              <input type="text" id="set-monthly-price" value="25 000" required>
+            </div>
+          </div>
+
+          <!-- To'lov va Aloqa Ma'lumotlari -->
+          <div class="settings-card-box">
+            <h3>💳 Karta & Telegram (Chek Qabul Qilish)</h3>
+            
+            <div class="form-group-field">
+              <label>Karta Raqami (To'lov uchun)</label>
+              <input type="text" id="set-card-number" value="5614 6819 0834 3415" required>
+            </div>
+
+            <div class="form-group-field">
+              <label>Karta Egasi Ismi</label>
+              <input type="text" id="set-card-holder" value="ISMOILOV NODIR" required>
+            </div>
+
+            <div class="form-group-field">
+              <label>Telegram Username (Chek yuborish uchun)</label>
+              <div style="display: flex; align-items: center;">
+                <span style="background: var(--bg-subtle); border: 1.5px solid var(--border-light); border-right: none; padding: 10px 12px; border-radius: var(--radius-md) 0 0 var(--radius-md); font-weight: 700; color: var(--text-muted);">@</span>
+                <input type="text" id="set-telegram-admin" value="alifbauz" style="border-radius: 0 var(--radius-md) var(--radius-md) 0;" required>
+              </div>
+              <small style="color: var(--text-muted); font-size: 0.76rem;">Foydalanuvchilar chekni shu Telegramga yuboradi</small>
+            </div>
+          </div>
+
+          <!-- Admin Parolini Yangilash -->
+          <div class="settings-card-box" style="border: 1.5px solid var(--blue-primary);">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+              <h3 style="margin: 0;">🔐 Admin Login va Parolini O‘zgartirish</h3>
+              <span class="status-badge status-vip" style="background: #e0f2fe; color: #0284c7;">Xavfsizlik</span>
+            </div>
+            
+            <div class="form-group-field">
+              <label>Admin Logini</label>
+              <input type="text" id="set-admin-user" placeholder="admin" required>
+            </div>
+
+            <div class="form-group-field">
+              <label>Yangi Admin Paroli (bo‘sh qoldirilsa o‘zgarmaydi)</label>
+              <div style="position: relative;">
+                <input type="password" id="set-admin-new-pass" placeholder="Yangi parol (kamida 4 ta belgi)..." style="padding-right: 42px;">
+                <button type="button" id="btn-toggle-set-pass" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer; font-size: 1.1rem; color: var(--text-muted); padding: 4px;" title="Parolni ko'rsatish/yashirish">👁️</button>
+              </div>
+            </div>
+
+            <div class="form-group-field">
+              <label>Yangi Parolni Tasdiqlash</label>
+              <input type="password" id="set-admin-confirm-pass" placeholder="Yangi parolni qayta kiriting...">
+            </div>
+
+            <div style="margin-top: 10px; text-align: right;">
+              <button type="button" id="btn-save-pwd-only" class="btn btn-secondary btn-sm" style="border: 1.5px solid var(--blue-primary); color: var(--blue-primary); font-weight: 700;">
+                🔑 Login va Parolni Yangilash
+              </button>
+            </div>
+          </div>
+
+            <hr style="border: none; border-top: 1px solid var(--border-light); margin: 18px 0;">
+
+            <div class="form-switch-row">
+              <div>
+                <span>Sayt Boshida E'lon Banneri</span>
+                <p style="font-size: 0.76rem; color: var(--text-muted); margin-top: 2px;">
+                  Sayt tepasida ogohlantirish yoki yangilik chiqarish
+                </p>
+              </div>
+              <label class="switch-toggle-el">
+                <input type="checkbox" id="set-announcement-active">
+                <span class="slider-toggle"></span>
+              </label>
+            </div>
+
+            <div class="form-group-field">
+              <label>E'lon Matni</label>
+              <input type="text" id="set-announcement-text" placeholder="Masalan: Bugun soat 23:00 da profilaktika o'tkaziladi.">
+            </div>
+          </div>
+
+        </div>
+
+        <div style="margin-top: 24px; text-align: right;">
+          <button type="submit" class="btn btn-primary btn-lg">
+            💾 Barcha Sozlamalarni Saqlash
+          </button>
+        </div>
+      </form>
+    </section>
+
+    <!-- ====================================================================
+         4-BO'LIM: AMALLAR TARIXI (LOGS)
+         ==================================================================== -->
+    <section id="tab-logs" class="admin-section" style="display: none;">
+      <div class="card">
+        <div class="card-header-bar">
+          <div class="card-title-group">
+            <h2>📜 So'nggi O'girishlar Jurnali</h2>
+            <p>Foydalanuvchilar qaysi asboblardan va qaysi fayllardan foydalangani tarixi</p>
+          </div>
+          <button id="btn-refresh-logs" class="btn btn-secondary btn-sm">🔄 Yangilash</button>
+        </div>
+
+        <div class="data-table-wrapper">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Vaqt</th>
+                <th>Foydalanuvchi</th>
+                <th>Amal turi</th>
+                <th>Fayl nomi</th>
+                <th>IP Manzil</th>
+              </tr>
+            </thead>
+            <tbody id="logs-table-body">
+              <tr><td colspan="5" style="text-align: center; padding: 20px;">Yuklanmoqda...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ====================================================================
+       VIP FAOLLASHTIRISH MODALI (Oy tanlash)
+       ==================================================================== -->
+  <div id="modal-vip-activate" class="modal-overlay-admin">
+    <div class="modal-box-admin">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px;">
+        <h3 style="font-size: 1.25rem; font-weight: 800; color: var(--text-primary); display: flex; align-items: center; gap: 8px;">
+          👑 VIP Obunani Faollashtirish
+        </h3>
+        <button id="btn-close-vip-modal" style="background: none; border: none; font-size: 1.4rem; color: var(--text-muted); cursor: pointer;">&times;</button>
+      </div>
+
+      <div style="background: var(--bg-subtle); padding: 14px; border-radius: var(--radius-md); margin-bottom: 20px;">
+        <p style="font-size: 0.86rem; color: var(--text-secondary); margin-bottom: 4px;">Foydalanuvchi:</p>
+        <p style="font-size: 1.05rem; font-weight: 800; color: var(--text-primary);"><span id="vip-modal-name">Ali</span> (<span id="vip-modal-login" style="color: var(--blue-primary);">ali77</span>)</p>
+      </div>
+
+      <form id="form-vip-activate">
+        <input type="hidden" id="vip-modal-user-id">
+        <div class="form-group-field">
+          <label>To'loviga Qarab VIP Muddatini Tanlang:</label>
+          <select id="vip-modal-months" style="font-weight: 700;">
+            <option value="1">1 Oy (25 000 so'm) — 30 kun</option>
+            <option value="2">2 Oy (50 000 so'm) — 60 kun</option>
+            <option value="3">3 Oy (75 000 so'm) — 90 kun</option>
+            <option value="6">6 Oy (150 000 so'm) — 180 kun</option>
+            <option value="12">1 Yil (250 000 so'm) — 365 kun</option>
+            <option value="unlimited">🌟 Cheksiz (Umrbod VIP)</option>
+          </select>
+        </div>
+
+        <p style="font-size: 0.78rem; color: var(--text-muted); margin-bottom: 20px; line-height: 1.4;">
+          💡 <i>Agar foydalanuvchida hali muddati tugamagan VIP bo'lsa, tanlangan muddat uning ustiga qo'shiladi!</i>
+        </p>
+
+        <div style="display: flex; gap: 10px; justify-content: flex-end;">
+          <button type="button" id="btn-cancel-vip" class="btn btn-secondary">Bekor qilish</button>
+          <button type="submit" class="btn btn-primary" style="background: linear-gradient(135deg, #d97706 0%, #b45309 100%);">
+            ✅ VIP ni Faollashtirish
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ====================================================================
+       ADMIN PAROLINI O'ZGARTIRISH MODALI
+       ==================================================================== -->
+  <div id="modal-change-password" class="modal-overlay-admin">
+    <div class="modal-box-admin" style="max-width: 440px;">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px;">
+        <h3 style="font-size: 1.25rem; font-weight: 800; color: var(--text-primary); margin: 0; display: flex; align-items: center; gap: 8px;">
+          🔑 Admin Parolini O‘zgartirish
+        </h3>
+        <button id="btn-close-pwd-modal" style="background: none; border: none; font-size: 1.4rem; color: var(--text-muted); cursor: pointer;">&times;</button>
+      </div>
+
+      <form id="admin-change-pwd-form" action="javascript:void(0);">
+        <div id="pwd-change-error-msg" style="color: #ef4444; background: #fee2e2; padding: 10px 14px; border-radius: var(--radius-sm); font-size: 0.82rem; font-weight: 600; margin-bottom: 14px; display: none;"></div>
+        <div id="pwd-change-success-msg" style="color: #15803d; background: #dcfce7; padding: 10px 14px; border-radius: var(--radius-sm); font-size: 0.82rem; font-weight: 600; margin-bottom: 14px; display: none;"></div>
+
+        <div class="form-group-field">
+          <label>Admin Logini (agar o‘zgartirmoqchi bo‘lsangiz):</label>
+          <input type="text" id="cp-new-username" placeholder="Masalan: admin">
+        </div>
+
+        <div class="form-group-field">
+          <label>Yangi Parol: (bo‘sh qoldirilsa o‘zgarmaydi)</label>
+          <div style="position: relative;">
+            <input type="password" id="cp-new-password" placeholder="Kamida 4 ta belgi..." style="padding-right: 42px;">
+            <button type="button" id="btn-toggle-cp-new" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer; font-size: 1.1rem; color: var(--text-muted); padding: 4px;" title="Parolni ko'rsatish/yashirish">👁️</button>
+          </div>
+        </div>
+
+        <div class="form-group-field">
+          <label>Yangi Parolni Qayta Kiriting (Tasdiqlash):</label>
+          <input type="password" id="cp-confirm-password" placeholder="Yangi parolni takrorlang...">
+        </div>
+
+        <div style="display: flex; gap: 10px; justify-content: flex-end; margin-top: 20px;">
+          <button type="button" id="btn-cancel-pwd-modal" class="btn btn-secondary">Bekor qilish</button>
+          <button type="submit" id="btn-submit-change-pwd" class="btn btn-primary" style="background: linear-gradient(135deg, #0284c7 0%, #0ea5e9 100%);">
+            💾 Parolni Saqlash
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+  {% endif %}
+
+  <div id="toast" class="toast"></div>
+
+  <script>
+    // Theme toggle
+    const themeToggleBtn = document.getElementById('theme-toggle-btn');
+    let currentTheme = localStorage.getItem('alifba_theme_v2') || 'light';
+    function applyTheme(t) {
+      document.documentElement.setAttribute('data-theme', t);
+      localStorage.setItem('alifba_theme_v2', t);
+      if (themeToggleBtn) {
+        themeToggleBtn.querySelector('.theme-btn-icon').textContent = t === 'dark' ? '🌙' : '☀️';
+        themeToggleBtn.querySelector('.theme-btn-label').textContent = t === 'dark' ? 'Tungi' : 'Kunduzgi';
+      }
+    }
+    if (themeToggleBtn) {
+      themeToggleBtn.addEventListener('click', () => {
+        currentTheme = currentTheme === 'dark' ? 'light' : 'dark';
+        applyTheme(currentTheme);
+      });
+    }
+    applyTheme(currentTheme);
+
+    function showToast(msg, isError = false) {
+      const t = document.getElementById('toast');
+      if (!t) return;
+      t.textContent = msg;
+      t.style.borderLeftColor = isError ? '#ef4444' : '#10b981';
+      t.classList.add('show');
+      setTimeout(() => t.classList.remove('show'), 3500);
+    }
+
+    // Password visibility toggle helper
+    function setupPasswordToggle(btnId, inputId) {
+      const btn = document.getElementById(btnId);
+      const input = document.getElementById(inputId);
+      if (btn && input) {
+        btn.addEventListener('click', (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          if (input.type === 'password') {
+            input.type = 'text';
+            btn.textContent = '🙈';
+          } else {
+            input.type = 'password';
+            btn.textContent = '👁️';
+          }
+        });
+      }
+    }
+    setupPasswordToggle('btn-toggle-login-pass', 'admin-pass-input');
+    setupPasswordToggle('btn-toggle-cp-new', 'cp-new-password');
+    setupPasswordToggle('btn-toggle-set-pass', 'set-admin-new-pass');
+
+    // -----------------------------------------------------------------------
+    // Admin Login / Logout
+    // -----------------------------------------------------------------------
+    const loginForm = document.getElementById('admin-login-form');
+    if (loginForm) {
+      loginForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        const user = (document.getElementById('admin-user-input')?.value || '').trim();
+        const pass = (document.getElementById('admin-pass-input')?.value || '').trim();
+        const errEl = document.getElementById('login-error-msg');
+        const submitBtn = document.getElementById('btn-admin-submit-login');
+
+        if (errEl) { errEl.style.display = 'none'; errEl.textContent = ''; }
+        if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = '⏳ Tekshirilmoqda...'; }
+
+        try {
+          const res = await fetch('/api/admin/login', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({username: user, password: pass})
+          });
+          const data = await res.json();
+          if (data.success) {
+            window.location.href = '/admin';
+          } else {
+            if (errEl) {
+              errEl.textContent = data.error || "Login yoki parol noto‘g‘ri!";
+              errEl.style.display = 'block';
+            }
+            if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = '🔒 Kirish'; }
+          }
+        } catch (err) {
+          if (errEl) {
+            errEl.textContent = "Server bilan bog‘lanishda xatolik: " + err.message;
+            errEl.style.display = 'block';
+          }
+          if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = '🔒 Kirish'; }
+        }
+      });
+    }
+
+    const logoutBtn = document.getElementById('btn-admin-logout');
+    if (logoutBtn) {
+      logoutBtn.addEventListener('click', async () => {
+        await fetch('/api/admin/logout', {method: 'POST'});
+        window.location.reload();
+      });
+    }
+
+    // -----------------------------------------------------------------------
+    // Admin Tabs
+    // -----------------------------------------------------------------------
+    const navBtns = document.querySelectorAll('.admin-nav-btn');
+    const sections = document.querySelectorAll('.admin-section');
+
+    navBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        navBtns.forEach(b => b.classList.remove('active'));
+        sections.forEach(s => s.style.display = 'none');
+        btn.classList.add('active');
+        const target = document.getElementById(btn.dataset.tab);
+        if (target) target.style.display = 'block';
+
+        if (btn.dataset.tab === 'tab-overview') {
+          loadDashboardMetrics();
+          loadRecentVisits();
+        }
+        if (btn.dataset.tab === 'tab-users') loadUsers();
+        if (btn.dataset.tab === 'tab-settings') loadSettings();
+        if (btn.dataset.tab === 'tab-logs') loadRecentLogs();
+      });
+    });
+
+    // -----------------------------------------------------------------------
+    // Users Management & Filter
+    // -----------------------------------------------------------------------
+    let currentFilter = 'all';
+    const searchInput = document.getElementById('user-search-input');
+    const filterBtns = document.querySelectorAll('.filter-pill-btn');
+
+    filterBtns.forEach(b => {
+      b.addEventListener('click', () => {
+        filterBtns.forEach(x => x.classList.remove('active'));
+        b.classList.add('active');
+        currentFilter = b.dataset.filter;
+        loadUsers();
+      });
+    });
+
+    let searchTimeout = null;
+    if (searchInput) {
+      searchInput.addEventListener('input', () => {
+        clearTimeout(searchTimeout);
+        searchTimeout = setTimeout(loadUsers, 250);
+      });
+    }
+
+    async function loadUsers() {
+      const tbody = document.getElementById('users-table-body');
+      if (!tbody) return;
+
+      const q = searchInput ? searchInput.value.trim() : '';
+      try {
+        const res = await fetch(`/api/admin/users?q=${encodeURIComponent(q)}&filter=${currentFilter}`);
+        const data = await res.json();
+
+        if (!data.success || !data.users || data.users.length === 0) {
+          tbody.innerHTML = `<tr><td colspan="7" style="text-align: center; padding: 30px; color: var(--text-muted);">Foydalanuvchilar topilmadi</td></tr>`;
+          return;
+        }
+
+        tbody.innerHTML = data.users.map(u => {
+          let vipBadge = '';
+          if (u.is_blocked === 1) {
+            vipBadge = `<span class="status-badge status-blocked">🚫 Bloklangan</span>`;
+          } else if (u.is_vip === 1) {
+            vipBadge = `<span class="status-badge status-vip">👑 VIP (${u.days_left} kun qoldi)</span>`;
+          } else {
+            vipBadge = `<span class="status-badge status-free">Bepul (5 limit)</span>`;
+          }
+
+          const initial = (u.name || 'U').charAt(0).toUpperCase();
+
+          return `
+            <tr>
+              <td>#${u.id}</td>
+              <td>
+                <div class="user-cell-meta">
+                  <div class="user-avatar-tag">${initial}</div>
+                  <div>
+                    <strong style="display:block; font-size: 0.95rem;">${escapeHtml(u.name)}</strong>
+                    <span style="font-size: 0.78rem; color: var(--blue-primary); font-family: monospace;">@${escapeHtml(u.username)}</span>
+                  </div>
+                </div>
+              </td>
+              <td>${vipBadge}</td>
+              <td><b>${u.today_usage}</b> ta bugun</td>
+              <td>${u.total_usage} ta jami</td>
+              <td style="font-size: 0.8rem; color: var(--text-muted);">${u.created_at ? u.created_at.substring(0, 10) : ''}</td>
+              <td style="text-align: right;">
+                <div class="action-btn-group" style="justify-content: flex-end;">
+                  <button class="btn-act btn-act-vip" onclick="openVipModal(${u.id}, '${escapeHtml(u.name)}', '${escapeHtml(u.username)}')">
+                    👑 VIP Berish
+                  </button>
+                  ${u.is_vip === 1 ? `
+                    <button class="btn-act btn-act-del" onclick="revokeVip(${u.id})">Bekor qilish</button>
+                  ` : ''}
+                  <button class="btn-act ${u.is_blocked === 1 ? 'btn-act-vip' : 'btn-act-block'}" onclick="toggleBlockUser(${u.id})">
+                    ${u.is_blocked === 1 ? '🔓 Ochish' : '🚫 Bloklash'}
+                  </button>
+                  <button class="btn-act btn-act-del" onclick="deleteUserPrompt(${u.id}, '${escapeHtml(u.username)}')">
+                    🗑
+                  </button>
+                </div>
+              </td>
+            </tr>
+          `;
+        }).join('');
+
+      } catch (err) {
+        tbody.innerHTML = `<tr><td colspan="7" style="text-align: center; color: #ef4444; padding: 20px;">Yuklashda xatolik!</td></tr>`;
+      }
+    }
+
+    function escapeHtml(text) {
+      if (!text) return '';
+      return text.replace(/[&<>"']/g, function(m) {
+        return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m];
+      });
+    }
+
+    // -----------------------------------------------------------------------
+    // VIP Modal Actions
+    // -----------------------------------------------------------------------
+    const vipModal = document.getElementById('modal-vip-activate');
+    window.openVipModal = function(id, name, login) {
+      document.getElementById('vip-modal-user-id').value = id;
+      document.getElementById('vip-modal-name').textContent = name;
+      document.getElementById('vip-modal-login').textContent = login;
+      vipModal.classList.add('active');
+    };
+
+    document.getElementById('btn-close-vip-modal').onclick = () => vipModal.classList.remove('active');
+    document.getElementById('btn-cancel-vip').onclick = () => vipModal.classList.remove('active');
+
+    document.getElementById('form-vip-activate').onsubmit = async (e) => {
+      e.preventDefault();
+      const userId = document.getElementById('vip-modal-user-id').value;
+      const monthsVal = document.getElementById('vip-modal-months').value;
+      const isUnlimited = monthsVal === 'unlimited';
+      const months = isUnlimited ? 1200 : parseInt(monthsVal);
+
+      try {
+        const res = await fetch('/api/admin/set-vip', {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({user_id: userId, months: months, unlimited: isUnlimited})
+        });
+        const d = await res.json();
+        if (d.success) {
+          showToast("👑 VIP muvaffaqiyatli faollashtirildi!");
+          vipModal.classList.remove('active');
+          loadUsers();
+        } else {
+          showToast(d.error || "Xatolik yuz berdi!", true);
+        }
+      } catch (err) {
+        showToast("Server bilan bog'lanishda xatolik!", true);
+      }
+    };
+
+    window.revokeVip = async function(id) {
+      if (!confirm("Ushbu foydalanuvchining VIP obunasi bekor qilinsinmi?")) return;
+      const res = await fetch('/api/admin/revoke-vip', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({user_id: id})
+      });
+      const d = await res.json();
+      if (d.success) {
+        showToast("VIP obuna bekor qilindi!");
+        loadUsers();
+      }
+    };
+
+    window.toggleBlockUser = async function(id) {
+      const res = await fetch('/api/admin/toggle-block', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({user_id: id})
+      });
+      const d = await res.json();
+      if (d.success) {
+        showToast(d.is_blocked === 1 ? "Foydalanuvchi bloklandi!" : "Foydalanuvchi blokdan chiqarildi!");
+        loadUsers();
+      }
+    };
+
+    window.deleteUserPrompt = async function(id, username) {
+      if (!confirm(`Haqiqatan ham @${username} hisobini butunlay o'chirib tashlamoqchimisiz?`)) return;
+      const res = await fetch('/api/admin/delete-user', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({user_id: id})
+      });
+      const d = await res.json();
+      if (d.success) {
+        showToast("Foydalanuvchi o'chirildi!");
+        loadUsers();
+      }
+    };
+
+    // -----------------------------------------------------------------------
+    // Overview Metrics & Clean Storage
+    // -----------------------------------------------------------------------
+    async function loadDashboardMetrics() {
+      try {
+        const res = await fetch('/api/admin/metrics');
+        const d = await res.json();
+        if (d.success) {
+          const m = d.metrics;
+          if (document.getElementById('m-today-visitors')) document.getElementById('m-today-visitors').textContent = m.today_visitors || 0;
+          if (document.getElementById('m-today-pageviews')) document.getElementById('m-today-pageviews').textContent = m.today_pageviews || 0;
+          if (document.getElementById('m-total-visitors')) document.getElementById('m-total-visitors').textContent = m.total_visitors || 0;
+          if (document.getElementById('m-total-pageviews')) document.getElementById('m-total-pageviews').textContent = m.total_pageviews || 0;
+          if (document.getElementById('m-today-actions')) document.getElementById('m-today-actions').textContent = m.today_actions || 0;
+          if (document.getElementById('m-total-actions')) document.getElementById('m-total-actions').textContent = m.total_actions || 0;
+          if (document.getElementById('m-total-storage')) document.getElementById('m-total-storage').textContent = (m.total_storage_mb || 0) + " MB";
+          if (document.getElementById('m-uploads-size')) document.getElementById('m-uploads-size').textContent = (m.uploads_size_mb || 0) + " MB";
+          if (document.getElementById('m-converted-size')) document.getElementById('m-converted-size').textContent = (m.converted_size_mb || 0) + " MB";
+          if (document.getElementById('m-total-users')) document.getElementById('m-total-users').textContent = m.total_users || 0;
+          if (document.getElementById('m-vip-users')) document.getElementById('m-vip-users').textContent = m.vip_users || 0;
+        }
+      } catch (err) {}
+    }
+
+    async function loadRecentVisits() {
+      const tbody = document.getElementById('visits-table-body');
+      if (!tbody) return;
+      try {
+        const res = await fetch('/api/admin/visits');
+        const d = await res.json();
+        if (d.success && d.visits && d.visits.length > 0) {
+          tbody.innerHTML = d.visits.map(v => `
+            <tr>
+              <td>#${v.id}</td>
+              <td style="font-weight: 700; color: var(--blue-primary); font-family: monospace;">${escapeHtml(v.ip_address)}</td>
+              <td style="font-size: 0.84rem; color: var(--text-secondary);">${escapeHtml(v.created_at)}</td>
+              <td style="font-size: 0.78rem; color: var(--text-muted); max-width: 380px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;" title="${escapeHtml(v.user_agent)}">
+                ${escapeHtml(v.user_agent || 'Noma\'lum brauzer')}
+              </td>
+            </tr>
+          `).join('');
+        } else {
+          tbody.innerHTML = `<tr><td colspan="4" style="text-align: center; color: var(--text-muted); padding: 25px;">Hozircha saytga tashriflar qayd etilmagan</td></tr>`;
+        }
+      } catch (err) {}
+    }
+
+    const btnRefreshVisits = document.getElementById('btn-refresh-visits');
+    if (btnRefreshVisits) {
+      btnRefreshVisits.addEventListener('click', () => {
+        loadDashboardMetrics();
+        loadRecentVisits();
+      });
+    }
+
+    const btnCleanStorage = document.getElementById('btn-clean-storage');
+    if (btnCleanStorage) {
+      btnCleanStorage.addEventListener('click', async () => {
+        if (!confirm("Barcha yuklangan va o'girilgan vaqtinchalik fayllar serverdan o'chirilsinmi?")) return;
+        btnCleanStorage.disabled = true;
+        btnCleanStorage.textContent = "Tozalanmoqda...";
+
+        try {
+          const res = await fetch('/api/admin/clean-storage', {method: 'POST'});
+          const d = await res.json();
+          if (d.success) {
+            showToast(`Tozalandi: ${d.cleaned_count} ta fayl (${d.freed_mb} MB bo'shatildi)!`);
+            loadDashboardMetrics();
+          }
+        } catch (err) {
+          showToast("Tozalashda xatolik yuz berdi!", true);
+        } finally {
+          btnCleanStorage.disabled = false;
+          btnCleanStorage.textContent = "🗑 Barcha Vaqtinchalik Fayllarni Tozalash";
+        }
+      });
+    }
+
+    // -----------------------------------------------------------------------
+    // Settings Loader & Saver
+    // -----------------------------------------------------------------------
+    async function loadSettings() {
+      try {
+        const res = await fetch('/api/admin/settings');
+        const d = await res.json();
+        if (d.success) {
+          const s = d.settings;
+          document.getElementById('set-require-login').checked = s.require_login === 'true';
+          document.getElementById('set-daily-limit').value = s.daily_free_limit || '5';
+          document.getElementById('set-monthly-price').value = s.vip_monthly_price || '25 000';
+          document.getElementById('set-card-number').value = s.card_number || '';
+          document.getElementById('set-card-holder').value = s.card_holder || '';
+          document.getElementById('set-telegram-admin').value = s.telegram_admin || '';
+          document.getElementById('set-admin-user').value = s.admin_username || 'admin';
+          const cpU = document.getElementById('cp-new-username');
+          if (cpU) cpU.value = s.admin_username || 'admin';
+          document.getElementById('set-announcement-active').checked = s.announcement_active === 'true';
+          document.getElementById('set-announcement-text').value = s.announcement_text || '';
+        }
+      } catch (err) {}
+    }
+
+    const settingsForm = document.getElementById('admin-settings-form');
+    if (settingsForm) {
+      settingsForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const payload = {
+          require_login: document.getElementById('set-require-login').checked ? 'true' : 'false',
+          daily_free_limit: document.getElementById('set-daily-limit').value.trim(),
+          vip_monthly_price: document.getElementById('set-monthly-price').value.trim(),
+          card_number: document.getElementById('set-card-number').value.trim(),
+          card_holder: document.getElementById('set-card-holder').value.trim(),
+          telegram_admin: document.getElementById('set-telegram-admin').value.trim().replace('@', ''),
+          admin_username: document.getElementById('set-admin-user').value.trim(),
+          new_password: document.getElementById('set-admin-new-pass').value.trim(),
+          announcement_active: document.getElementById('set-announcement-active').checked ? 'true' : 'false',
+          announcement_text: document.getElementById('set-announcement-text').value.trim()
+        };
+
+        try {
+          const res = await fetch('/api/admin/settings', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(payload)
+          });
+          const d = await res.json();
+          if (d.success) {
+            showToast("✅ Sozlamalar muvaffaqiyatli saqlandi!");
+            document.getElementById('set-admin-new-pass').value = '';
+            const cInput = document.getElementById('set-admin-confirm-pass');
+            if (cInput) cInput.value = '';
+          } else {
+            showToast(d.error || "Xatolik!", true);
+          }
+        } catch (err) {
+          showToast("Sozlamalarni saqlashda xatolik!", true);
+        }
+      });
+    }
+
+    // Login va parolni yangilash tugmasi (Sozlamalar bo'limida)
+    const btnSavePwdOnly = document.getElementById('btn-save-pwd-only');
+    if (btnSavePwdOnly) {
+      btnSavePwdOnly.addEventListener('click', async () => {
+        const newUsername = (document.getElementById('set-admin-user')?.value || '').trim();
+        const newPassword = (document.getElementById('set-admin-new-pass')?.value || '').trim();
+        const confirmPassword = (document.getElementById('set-admin-confirm-pass')?.value || '').trim();
+
+        if (newPassword) {
+          if (newPassword.length < 4) {
+            showToast("Yangi parol kamida 4 ta belgi bo‘lishi kerak!", true);
+            return;
+          }
+          if (confirmPassword && newPassword !== confirmPassword) {
+            showToast("Yangi parol va tasdiqlovchi parol mos kelmadi!", true);
+            return;
+          }
+        }
+
+        btnSavePwdOnly.disabled = true;
+        btnSavePwdOnly.textContent = "Saqlanmoqda...";
+        try {
+          const res = await fetch('/api/admin/change-password', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({
+              new_username: newUsername,
+              new_password: newPassword,
+              confirm_password: confirmPassword
+            })
+          });
+          const d = await res.json();
+          if (d.success) {
+            showToast("✅ " + (d.message || "Admin login va paroli muvaffaqiyatli yangilandi!"));
+            document.getElementById('set-admin-new-pass').value = '';
+            const cInput = document.getElementById('set-admin-confirm-pass');
+            if (cInput) cInput.value = '';
+            const cpUser = document.getElementById('cp-new-username');
+            if (cpUser && newUsername) cpUser.value = newUsername;
+          } else {
+            showToast(d.error || "Xatolik!", true);
+          }
+        } catch (e) {
+          showToast("Server bilan aloqa uzildi!", true);
+        } finally {
+          btnSavePwdOnly.disabled = false;
+          btnSavePwdOnly.textContent = "🔑 Login va Parolni Yangilash";
+        }
+      });
+    }
+
+    // -----------------------------------------------------------------------
+    // Admin Parolini O'zgartirish Modali
+    // -----------------------------------------------------------------------
+    const pwdModal = document.getElementById('modal-change-password');
+    const btnOpenPwdModal = document.getElementById('btn-open-pwd-modal');
+    const btnClosePwdModal = document.getElementById('btn-close-pwd-modal');
+    const btnCancelPwdModal = document.getElementById('btn-cancel-pwd-modal');
+    const formChangePwd = document.getElementById('admin-change-pwd-form');
+    const pwdErrorMsg = document.getElementById('pwd-change-error-msg');
+    const pwdSuccessMsg = document.getElementById('pwd-change-success-msg');
+
+    if (btnOpenPwdModal && pwdModal) {
+      btnOpenPwdModal.addEventListener('click', () => {
+        if (pwdErrorMsg) pwdErrorMsg.style.display = 'none';
+        if (pwdSuccessMsg) pwdSuccessMsg.style.display = 'none';
+        pwdModal.classList.add('active');
+        const setAdminUser = document.getElementById('set-admin-user');
+        const cpNewUser = document.getElementById('cp-new-username');
+        if (setAdminUser && cpNewUser) {
+          cpNewUser.value = setAdminUser.value || '';
+        }
+      });
+    }
+    if (btnClosePwdModal && pwdModal) {
+      btnClosePwdModal.addEventListener('click', () => pwdModal.classList.remove('active'));
+    }
+    if (btnCancelPwdModal && pwdModal) {
+      btnCancelPwdModal.addEventListener('click', () => pwdModal.classList.remove('active'));
+    }
+
+    if (formChangePwd) {
+      formChangePwd.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        if (pwdErrorMsg) pwdErrorMsg.style.display = 'none';
+        if (pwdSuccessMsg) pwdSuccessMsg.style.display = 'none';
+
+        const newUsername = (document.getElementById('cp-new-username')?.value || '').trim();
+        const newPassword = (document.getElementById('cp-new-password')?.value || '').trim();
+        const confirmPassword = (document.getElementById('cp-confirm-password')?.value || '').trim();
+
+        if (newPassword) {
+          if (newPassword.length < 4) {
+            if (pwdErrorMsg) { pwdErrorMsg.textContent = "Yangi parol kamida 4 ta belgidan iborat bo‘lishi kerak!"; pwdErrorMsg.style.display = 'block'; }
+            return;
+          }
+          if (newPassword !== confirmPassword) {
+            if (pwdErrorMsg) { pwdErrorMsg.textContent = "Yangi parol va tasdiqlovchi parol mos kelmadi!"; pwdErrorMsg.style.display = 'block'; }
+            return;
+          }
+        }
+
+        const submitBtn = document.getElementById('btn-submit-change-pwd');
+        if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = "Saqlanmoqda..."; }
+
+        try {
+          const res = await fetch('/api/admin/change-password', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({
+              new_username: newUsername,
+              new_password: newPassword,
+              confirm_password: confirmPassword
+            })
+          });
+          const d = await res.json();
+          if (d.success) {
+            showToast("✅ " + (d.message || "Admin login va paroli muvaffaqiyatli yangilandi!"));
+            if (pwdSuccessMsg) {
+              pwdSuccessMsg.textContent = d.message || "Admin login va paroli muvaffaqiyatli yangilandi!";
+              pwdSuccessMsg.style.display = 'block';
+            }
+            formChangePwd.reset();
+            const setAdminUser = document.getElementById('set-admin-user');
+            if (setAdminUser && newUsername) setAdminUser.value = newUsername;
+            setTimeout(() => {
+              if (pwdModal) pwdModal.classList.remove('active');
+            }, 1200);
+          } else {
+            if (pwdErrorMsg) {
+              pwdErrorMsg.textContent = d.error || "Xatolik yuz berdi!";
+              pwdErrorMsg.style.display = 'block';
+            }
+          }
+        } catch (err) {
+          if (pwdErrorMsg) {
+            pwdErrorMsg.textContent = "Server bilan aloqa uzildi!";
+            pwdErrorMsg.style.display = 'block';
+          }
+        } finally {
+          if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = "💾 Parolni Saqlash"; }
+        }
+      });
+    }
+
+    // -----------------------------------------------------------------------
+    // Recent Logs Loader
+    // -----------------------------------------------------------------------
+    async function loadRecentLogs() {
+      const tbody = document.getElementById('logs-table-body');
+      if (!tbody) return;
+      try {
+        const res = await fetch('/api/admin/logs');
+        const d = await res.json();
+        if (d.success && d.logs && d.logs.length > 0) {
+          tbody.innerHTML = d.logs.map(l => `
+            <tr>
+              <td style="font-size: 0.82rem; color: var(--text-muted);">${l.created_at}</td>
+              <td>
+                ${l.user_name ? `<b>${escapeHtml(l.user_name)}</b> (@${escapeHtml(l.user_login)})` : '<span style="color: var(--text-muted);">Mehmon (Ro\'yxatsiz)</span>'}
+                ${l.is_vip === 1 ? '<span class="status-badge status-vip" style="margin-left:4px;">👑 VIP</span>' : ''}
+              </td>
+              <td><span class="pill pill-docx">${escapeHtml(l.action_type)}</span></td>
+              <td style="max-width: 220px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${escapeHtml(l.file_name || '-')}</td>
+              <td style="font-family: monospace; font-size: 0.8rem; color: var(--text-muted);">${escapeHtml(l.ip_address)}</td>
+            </tr>
+          `).join('');
+        } else {
+          tbody.innerHTML = `<tr><td colspan="5" style="text-align: center; color: var(--text-muted); padding: 20px;">Harakatlar tarixi bo'sh</td></tr>`;
+        }
+      } catch (err) {}
+    }
+
+    const btnRefreshLogs = document.getElementById('btn-refresh-logs');
+    if (btnRefreshLogs) btnRefreshLogs.addEventListener('click', loadRecentLogs);
+
+    // Initial load
+    loadDashboardMetrics();
+    loadRecentVisits();
+    if (document.getElementById('users-table-body')) {
+      loadUsers();
+    }
+  </script>
+
+</body>
+</html>
